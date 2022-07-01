@@ -12,8 +12,6 @@
 #include <string>
 #include <utility>
 
-using namespace std;
-
 using editor::XMLFeature;
 
 namespace
@@ -189,7 +187,7 @@ Polygon GetWaysOrRelationsGeometry(pugi::xml_document const & osmResponse,
 /// |wayOrRelation| - either way or relation to be compared agains ourGeometry;
 /// |ourGeometry| - geometry of a FeatureType;
 double ScoreGeometry(pugi::xml_document const & osmResponse, pugi::xml_node const & wayOrRelation,
-                     vector<m2::PointD> const & ourGeometry)
+                     std::vector<m2::PointD> const & ourGeometry)
 {
   ASSERT(!ourGeometry.empty(), ("Our geometry cannot be empty"));
 
@@ -251,7 +249,7 @@ pugi::xml_node GetBestOsmNode(pugi::xml_document const & osmResponse, ms::LatLon
 }
 
 pugi::xml_node GetBestOsmWayOrRelation(pugi::xml_document const & osmResponse,
-                                       vector<m2::PointD> const & geometry)
+                                       std::vector<m2::PointD> const & geometry)
 {
   double bestScore = geometry::kPenaltyScore;
   pugi::xml_node bestMatchWay;
@@ -285,8 +283,8 @@ double ScoreTriangulatedGeometries(vector<m2::PointD> const & lhs, vector<m2::Po
   return score;
 }
 
-double ScoreTriangulatedGeometriesByPoints(vector<m2::PointD> const & lhs,
-                                           vector<m2::PointD> const & rhs)
+double ScoreTriangulatedGeometriesByPoints(std::vector<m2::PointD> const & lhs,
+                                           std::vector<m2::PointD> const & rhs)
 {
   // The default comparison operator used in sort above (cmp1) and one that is
   // used in set_itersection (cmp2) are compatible in that sence that

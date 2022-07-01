@@ -31,12 +31,12 @@
 
 #include "defines.hpp"
 
-using namespace indexer;
-using namespace search;
-using namespace std;
-
 namespace generator
 {
+  using namespace indexer;
+  using namespace search;
+  using std::string, std::vector;
+
 namespace
 {
 template <typename BoundariesTable, typename MappingReader>

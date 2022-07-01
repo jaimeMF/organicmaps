@@ -11,7 +11,6 @@
 
 using platform::CountryFile;
 using platform::LocalCountryFile;
-using namespace std;
 
 namespace
 {
@@ -82,7 +81,7 @@ private:
   DataSource::StopSearchCallback m_stop;
 };
 
-void ReadFeatureType(function<void(FeatureType &)> const & fn, FeatureSource & src, uint32_t index)
+void ReadFeatureType(std::function<void(FeatureType &)> const & fn, FeatureSource & src, uint32_t index)
 {
   unique_ptr<FeatureType> ft;
   switch (src.GetFeatureStatus(index))
@@ -107,7 +106,7 @@ void ReadFeatureType(function<void(FeatureType &)> const & fn, FeatureSource & s
 }  //  namespace
 
 // FeaturesLoaderGuard ---------------------------------------------------------------------
-string FeaturesLoaderGuard::GetCountryFileName() const
+std::string FeaturesLoaderGuard::GetCountryFileName() const
 {
   if (!m_handle.IsAlive())
     return string();
@@ -124,7 +123,7 @@ bool FeaturesLoaderGuard::IsWorld() const
          feature::DataHeader::MapType::World;
 }
 
-unique_ptr<FeatureType> FeaturesLoaderGuard::GetOriginalOrEditedFeatureByIndex(uint32_t index) const
+std::unique_ptr<FeatureType> FeaturesLoaderGuard::GetOriginalOrEditedFeatureByIndex(uint32_t index) const
 {
   if (!m_handle.IsAlive())
     return {};
@@ -133,7 +132,7 @@ unique_ptr<FeatureType> FeaturesLoaderGuard::GetOriginalOrEditedFeatureByIndex(u
   return GetFeatureByIndex(index);
 }
 
-unique_ptr<FeatureType> FeaturesLoaderGuard::GetFeatureByIndex(uint32_t index) const
+std::unique_ptr<FeatureType> FeaturesLoaderGuard::GetFeatureByIndex(uint32_t index) const
 {
   if (!m_handle.IsAlive())
     return {};
@@ -148,13 +147,13 @@ unique_ptr<FeatureType> FeaturesLoaderGuard::GetFeatureByIndex(uint32_t index) c
   return GetOriginalFeatureByIndex(index);
 }
 
-unique_ptr<FeatureType> FeaturesLoaderGuard::GetOriginalFeatureByIndex(uint32_t index) const
+std::unique_ptr<FeatureType> FeaturesLoaderGuard::GetOriginalFeatureByIndex(uint32_t index) const
 {
   return m_handle.IsAlive() ? m_source->GetOriginalFeature(index) : nullptr;
 }
 
 // DataSource ----------------------------------------------------------------------------------
-unique_ptr<MwmInfo> DataSource::CreateInfo(platform::LocalCountryFile const & localFile) const
+std::unique_ptr<MwmInfo> DataSource::CreateInfo(platform::LocalCountryFile const & localFile) const
 {
   MwmValue value(localFile);
 
@@ -177,7 +176,7 @@ unique_ptr<MwmInfo> DataSource::CreateInfo(platform::LocalCountryFile const & lo
   return info;
 }
 
-unique_ptr<MwmValue> DataSource::CreateValue(MwmInfo & info) const
+std::unique_ptr<MwmValue> DataSource::CreateValue(MwmInfo & info) const
 {
   // Create a section with rank table if it does not exist.
   platform::LocalCountryFile const & localFile = info.GetLocalFile();
@@ -190,7 +189,7 @@ unique_ptr<MwmValue> DataSource::CreateValue(MwmInfo & info) const
   return p;
 }
 
-pair<MwmSet::MwmId, MwmSet::RegResult> DataSource::RegisterMap(LocalCountryFile const & localFile)
+std::pair<MwmSet::MwmId, MwmSet::RegResult> DataSource::RegisterMap(LocalCountryFile const & localFile)
 {
   return Register(localFile);
 }
@@ -290,7 +289,7 @@ void DataSource::ForEachInRectForMWM(FeatureCallback const & f, m2::RectD const 
   }
 }
 
-void DataSource::ReadFeatures(FeatureCallback const & fn, vector<FeatureID> const & features) const
+void DataSource::ReadFeatures(FeatureCallback const & fn, std::vector<FeatureID> const & features) const
 {
   ASSERT(is_sorted(features.begin(), features.end()), ());
 

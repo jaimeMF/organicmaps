@@ -24,8 +24,6 @@
 #include <cstring>
 #include <vector>
 
-using namespace std;
-
 namespace
 {
 bool IsEqual(double d1, double d2)
@@ -46,7 +44,7 @@ bool IsEqual(m2::RectD const & r1, m2::RectD const & r2)
           IsEqual(r1.maxY(), r2.maxY()));
 }
 
-bool IsEqual(vector<m2::PointD> const & v1, vector<m2::PointD> const & v2)
+bool IsEqual(std::vector<m2::PointD> const & v1, std::vector<m2::PointD> const & v2)
 {
   return equal(cbegin(v1), cend(v1), cbegin(v2), cend(v2),
                [](m2::PointD const & p1, m2::PointD const & p2) { return IsEqual(p1, p2); });
@@ -165,7 +163,7 @@ void FeatureBuilder::SetHoles(FeatureBuilder::Geometry const & holes)
   }
 }
 
-void FeatureBuilder::AddPolygon(vector<m2::PointD> & poly)
+void FeatureBuilder::AddPolygon(std::vector<m2::PointD> & poly)
 {
   // check for closing
   if (poly.size() < 3)
@@ -576,12 +574,12 @@ int FeatureBuilder::GetMinFeatureDrawScale() const
   return (minScale == -1 ? 1000 : minScale);
 }
 
-bool FeatureBuilder::AddName(string_view lang, string_view name)
+bool FeatureBuilder::AddName(std::string_view lang, std::string_view name)
 {
   return m_params.AddName(lang, name);
 }
 
-string_view FeatureBuilder::GetName(int8_t lang) const
+std::string_view FeatureBuilder::GetName(int8_t lang) const
 {
   string_view sv;
   CHECK(m_params.name.GetString(lang, sv) != sv.empty(), ());
@@ -765,9 +763,9 @@ bool FeatureBuilder::IsValid() const
   return true;
 }
 
-string DebugPrint(FeatureBuilder const & fb)
+std::string DebugPrint(FeatureBuilder const & fb)
 {
-  ostringstream out;
+  std::ostringstream out;
 
   switch (fb.GetGeomType())
   {

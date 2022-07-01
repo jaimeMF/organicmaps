@@ -10,7 +10,7 @@
 #include <functional>
 #include <iterator>
 
-using namespace std;
+using std::string;
 
 namespace
 {
