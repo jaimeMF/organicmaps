@@ -92,7 +92,6 @@ public class DownloadResourcesLegacyActivity extends BaseMwmFragmentActivity imp
   private final IntentProcessor[] mIntentProcessors = {
       new Factory.GeoIntentProcessor(),
       new Factory.HttpGeoIntentProcessor(),
-      new Factory.ApiIntentProcessor(),
       new Factory.HttpMapsIntentProcessor(),
       new Factory.OpenCountryTaskProcessor(),
       new Factory.KmzKmlProcessor(this),
