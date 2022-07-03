@@ -407,14 +407,11 @@ public class DownloadResourcesLegacyActivity extends BaseMwmFragmentActivity imp
 
   protected void onActivityResult(int requestCode, int resultCode, Intent data)
   {
-    switch (requestCode)
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQ_CODE_API_RESULT)
     {
-    case REQ_CODE_API_RESULT:
       setResult(resultCode, data);
       finish();
-      break;
-    default:
-      super.onActivityResult(requestCode, resultCode, data);
     }
   }
 
