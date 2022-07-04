@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 public class ParsingResult
 {
   @Retention(RetentionPolicy.SOURCE)
-  @IntDef({ TYPE_INCORRECT, TYPE_MAP, TYPE_ROUTE, TYPE_SEARCH })
+  @IntDef({ TYPE_INCORRECT, TYPE_MAP, TYPE_ROUTE, TYPE_SEARCH, TYPE_COORDINATES})
   public @interface UrlType {}
 
   // Represents url_scheme::ParsedMapApi::UrlType from c++ part.
@@ -20,6 +20,7 @@ public class ParsingResult
   //public static final int TYPE_CATALOGUE = 5;
   //public static final int TYPE_CATALOGUE_PATH = 6;
   //public static final int TYPE_SUBSCRIPTION = 7;
+  public static final int TYPE_COORDINATES = 8;
 
   private final int mUrlType;
   private final boolean mSuccess;
