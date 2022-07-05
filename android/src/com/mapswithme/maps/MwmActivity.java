@@ -148,14 +148,15 @@ public class MwmActivity extends BaseMwmFragmentActivity
   @Nullable
   private MapFragment mMapFragment;
 
-  private View mPositionChooser;
-  enum PositionChooserMode {
+  private View mPointChooser;
+  enum PointChooserMode
+  {
     NONE,
     EDITOR,
     API
   };
   @NonNull
-  private PositionChooserMode mPositionChooserMode = PositionChooserMode.NONE;
+  private PointChooserMode mPointChooserMode = PointChooserMode.NONE;
 
   private RoutingPlanInplaceController mRoutingPlanInplaceController;
 
@@ -482,26 +483,26 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
   private void initPositionChooser()
   {
-    mPositionChooser = findViewById(R.id.position_chooser);
-    if (mPositionChooser == null)
+    mPointChooser = findViewById(R.id.position_chooser);
+    if (mPointChooser == null)
       return;
 
-    final Toolbar toolbar = mPositionChooser.findViewById(R.id.toolbar_position_chooser);
+    final Toolbar toolbar = mPointChooser.findViewById(R.id.toolbar_point_chooser);
     UiUtils.extendViewWithStatusBar(toolbar);
     UiUtils.showHomeUpButton(toolbar);
     toolbar.setNavigationOnClickListener(v -> {
       closePositionChooser();
-      if (mPositionChooserMode == PositionChooserMode.API)
+      if (mPointChooserMode == PointChooserMode.API)
         finish();
     });
-    mPositionChooser.findViewById(R.id.done).setOnClickListener(
+    mPointChooser.findViewById(R.id.done).setOnClickListener(
         v ->
         {
-          switch (mPositionChooserMode)
+          switch (mPointChooserMode)
           {
           case API:
-            Intent apiResult = new Intent();
-            double[] center = Framework.nativeGetScreenRectCenter();
+            final Intent apiResult = new Intent();
+            final double[] center = Framework.nativeGetScreenRectCenter();
             apiResult.putExtra(Const.EXTRA_POINT_LAT, center[0]);
             apiResult.putExtra(Const.EXTRA_POINT_LON, center[1]);
             apiResult.putExtra(Const.EXTRA_ZOOM_LEVEL, Framework.nativeGetDrawScale());
@@ -519,7 +520,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
           }
           closePositionChooser();
         });
-    UiUtils.hide(mPositionChooser);
+    UiUtils.hide(mPointChooser);
   }
 
   private void refreshSearchToolbar()
@@ -548,31 +549,31 @@ public class MwmActivity extends BaseMwmFragmentActivity
 
   public void showPositionChooserForAPI()
   {
-    showPositionChooser(PositionChooserMode.API, false, false);
+    showPositionChooser(PointChooserMode.API, false, false);
   }
 
   public void showPositionChooserForEditor(boolean isBusiness, boolean applyPosition)
   {
-    showPositionChooser(PositionChooserMode.EDITOR, isBusiness, applyPosition);
+    showPositionChooser(PointChooserMode.EDITOR, isBusiness, applyPosition);
   }
 
-  private void showPositionChooser(PositionChooserMode mode, boolean isBusiness, boolean applyPosition)
+  private void showPositionChooser(PointChooserMode mode, boolean isBusiness, boolean applyPosition)
   {
-    mPositionChooserMode = mode;
+    mPointChooserMode = mode;
     closeFloatingToolbarsAndPanels(false);
-    UiUtils.show(mPositionChooser);
+    UiUtils.show(mPointChooser);
     setFullscreen(true);
     Framework.nativeTurnOnChoosePositionMode(isBusiness, applyPosition);
   }
 
   private void hidePositionChooser()
   {
-    UiUtils.hide(mPositionChooser);
+    UiUtils.hide(mPointChooser);
     Framework.nativeTurnOffChoosePositionMode();
     setFullscreen(false);
-    if (mPositionChooserMode == PositionChooserMode.API)
+    if (mPointChooserMode == PointChooserMode.API)
       finish();
-    mPositionChooserMode = PositionChooserMode.NONE;
+    mPointChooserMode = PointChooserMode.NONE;
   }
 
   private void initMap(boolean isLaunchByDeepLink)
@@ -702,7 +703,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
    */
   private boolean closePositionChooser()
   {
-    if (UiUtils.isVisible(mPositionChooser))
+    if (UiUtils.isVisible(mPointChooser))
     {
       hidePositionChooser();
       return true;
@@ -1005,7 +1006,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     mMainMenu.onResume();
     if (Framework.nativeIsInChoosePositionMode())
     {
-      UiUtils.show(mPositionChooser);
+      UiUtils.show(mPointChooser);
       setFullscreen(true);
     }
     if (mOnmapDownloader != null)

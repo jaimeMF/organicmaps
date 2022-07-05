@@ -54,11 +54,7 @@ public:
     Map = 1,
     Route = 2,
     Search = 3,
-    /* Lead = 4, */
-    /* Catalogue = 5, */
-    /* CataloguePath = 6, */
-    /* Subscription = 7, */
-    Coordinates = 8,
+    Crosshair = 4,
   };
 
   struct ParsingResult
