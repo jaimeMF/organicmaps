@@ -46,3 +46,8 @@ private:
 };
 }  // namespace vulkan
 }  // namespace dp
+
+// VK_EXT_debug_report
+extern PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
+extern PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
+extern PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;
